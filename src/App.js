@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button ,DatePicker} from 'antd';
 import logo from './logo.svg';
 import './App.css';
-
+import Test from './components/mobx/test'
 class App extends Component {
 
   onChange=(e)=>{
@@ -13,6 +13,8 @@ class App extends Component {
       <div className="App">
         <Button type="primary">Primary</Button>
         <DatePicker onChange={this.onChange} />
+        <Test />
+
       </div>
     );
   }

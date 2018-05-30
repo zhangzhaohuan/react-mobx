@@ -53,3 +53,34 @@ npm i babel-plugin-transform-decorators-legacy --save-dev
     ]
   },
 ```
+### vscode 支持装饰器
+  * 设置->工作区设置
+```
+{
+    "javascript.implicitProjectConfig.experimentalDecorators": true
+}
+```
+### alias配置common文件的路径
+  * 打开webpack.config.dev.js 在alias添加（86行）
+  ```
+   common: path.resolve(__dirname, '../src/common/'),
+  ```
+### 配置反向代理
+  * 打开webpackDevServer.config proxy（89行）:注 mock数据是用的json-server
+```
+proxy: {
+      '/mock': {
+        target: 'http://localhost:3001/test',
+        changeOrigin: true,
+        pathRewrite:{
+          "^/mock" : ""
+        }
+      }
+    },
+```
+### 启动json-server
+  * npm install json-server -g
+  * 切换到mock数据的位置mock文件夹，执行
+  ```
+  json-server --watch db.json -p 3001
+  ```
