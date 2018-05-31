@@ -1,4 +1,4 @@
-import { get, post } from '../request';
+import { get } from '../request';
 
 //系统管理-管理员管理-list
 export async function adminList() {
@@ -28,7 +28,7 @@ export async function ipTokenList() {
 }
 
 //test
-export async function test() {
+export async function queryTest() {
   const url = '/mock';
   const params = {
     pagesize:50

@@ -1,28 +1,30 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import { test } from 'common/axios/axios.js'
+import { queryTest } from 'common/axios/axios.js'
 
 @inject('test')
 @observer
-export default class Index extends Component {
+export default class Test extends Component {
     constructor(props) {
         super(props);
         this.test = this.props.test;
+        console.log(this.test);
+        
     }
 
-    async componentDidMount() {
-        const data = await test();
-        this.test.data = data.data;
-        // console.log(data);
+    componentDidMount() {
+        const params = {};
+        this.test.queryTest(params);
     }
     render() {
         const { data } = this.test;
         return (
             <div>
-                <ul className="todo-list">
+            
+                    <span>123</span>
                     <span>{this.test.getDataLength}</span>
-                    <p>{this.test.getlength.get()}</p>
-                </ul>
+                    {/* <p>{this.test.getlength.get()}</p> */}
+
             </div>
         )
     }
