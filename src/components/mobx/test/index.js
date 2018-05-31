@@ -8,7 +8,7 @@ export default class Test extends Component {
     constructor(props) {
         super(props);
         this.test = this.props.test;
-        console.log(this.test);
+        // console.log(this.test);
         
     }
 
@@ -17,13 +17,14 @@ export default class Test extends Component {
         this.test.queryTest(params);
     }
     render() {
-        const { data } = this.test;
         return (
             <div>
-            
-                    <span>123</span>
-                    <span>{this.test.getDataLength}</span>
+                    <p>{this.test.getDataLength}</p>
+                    <p>{this.test.age}</p>
+                    
+                    <p>{this.test.getAge.toString()}</p>
                     {/* <p>{this.test.getlength.get()}</p> */}
+                    
 
             </div>
         )

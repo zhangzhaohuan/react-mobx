@@ -86,14 +86,19 @@ proxy: {
   ```
 ### mobx api
   * observable, computed, autorun, action, configure, runInAction
+  * 触发顺序：
+    autorun-》computed-》（依赖改变）-》autorun-》computed
   * observable
-    * observable追踪状态变化
+    * observable 声明可追踪状态
   * computed
-    * 计算机属性，依赖变化才计算，返回值
+    * 计算属性，必须有返回值
+    * 触发条件：依赖数据发生变化
   * autorun
-    * 依赖变化，执行附加操作
+    * 自动执行附加操作，无需返回值
+    * 触发条件：依赖数据发生变化
   * action
-    * 定义方法，mobx推荐在action中改变状态
+    * 定义方法，mobx推荐在action中改变状态
+    * 触发条件：函数名（）；
     * action只能影响正在运行的函数，而无法影响当前函数调用的异步操作
     ```
     //no use strict
@@ -102,6 +107,7 @@ proxy: {
       this.data = data.data;
       console.log(data);
     }
+    //注：需要action包裹
 
     //use strict
     @action queryTest = async (params) => {
@@ -110,13 +116,23 @@ proxy: {
       this.data = data.data;
       console.log(data);
     })
-  }
+    }
     ```
-  * configure
+  * configure（mobx4）
     * 配置
-      * 严格模式
+      * 配置严格模式
       ```
       configure({ enforceActions: true });
       ```
   * runInAction
-    * 
+    * 触发条件：函数会立即执行
+    * 应用场景：异步函数中
+    * 解决：不用action函数重新包裹，而是使用runInAction
+    ```
+        @action queryTest = async (params) => {
+          const data = await queryTest();
+          runInAction(()=>{
+            this.data = data.data;
+            console.log(data);
+        })
+    ```
