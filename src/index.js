@@ -7,6 +7,6 @@ import { Provider } from 'mobx-react';
 import store from './store';
 
 ReactDOM.render(
-    <Provider {...store}><App /></Provider>,
-    document.getElementById('root'));
+  <Provider {...store}><App /></Provider>,
+  document.getElementById('root'));
 registerServiceWorker();

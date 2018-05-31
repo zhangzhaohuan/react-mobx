@@ -2,10 +2,10 @@ import { observable, computed, autorun, action, configure, runInAction } from 'm
 import { queryTest } from 'common/axios/axios.js'
 configure({ enforceActions: true });
 class Test {
-  @observable data=[];
-  @observable name=1;
-  @observable age=1;
-  
+  @observable data = [];
+  @observable name = 1;
+  @observable age = 1;
+
   disposer = autorun(() => console.log(this.data))
   // @autorun(() => console.log(this.name))
   @computed get getDataLength() {
@@ -13,24 +13,24 @@ class Test {
     return this.data.length
   }
   @computed get getAge() {
-    console.log(this.age>1);
-    return this.age>1
+    console.log(this.age > 1);
+    return this.age > 1
   }
   // getlength = computed((() => {
   //   // console.log(this.data.length);
   //   return this.data.length
   // }))
-  
+
   @action queryTest = async (params) => {
     const data = await queryTest(params);
     console.log(data.data);
-    
-    runInAction(()=>{
-      this.data=this.data.concat(data.data);
-      this.age = this.age+1;
+
+    runInAction(() => {
+      this.data = this.data.concat(data.data);
+      this.age = this.age + 1;
       console.log(this.data.length);
       console.log(this.age);
-      
+
     })
   }
 
