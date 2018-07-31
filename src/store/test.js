@@ -6,12 +6,13 @@ class Test {
   @observable name = 1;
   @observable age = 1;
 
-  disposer = autorun(() => console.log(this.data))
+  // disposer = autorun(() => console.log(this.data))
   // @autorun(() => console.log(this.name))
   @computed get getDataLength() {
     console.log(this.data.length);
     return this.data.length
   }
+
   @computed get getAge() {
     console.log(this.age > 1);
     return this.age > 1
@@ -24,13 +25,12 @@ class Test {
   @action queryTest = async (params) => {
     const data = await queryTest(params);
     console.log(data.data);
-
     runInAction(() => {
-      this.data = this.data.concat(data.data);
+      // this.data = this.data.concat(data.data);
+      this.data = data.data
       this.age = this.age + 1;
       console.log(this.data.length);
       console.log(this.age);
-
     })
   }
 
@@ -69,10 +69,9 @@ class Test {
   //     }
   //   }
   // }
-
-  // @action.bound handlerChange (event) {
-  //   this.defaultVal = event.target.value
-  // }
+  @action.bound addAge() {
+    this.age = this.age + 1;
+  }
   // @action.bound addTodo (event) {
   //   if (event.keyCode === 13) {
   //     var data = {

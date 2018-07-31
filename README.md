@@ -137,3 +137,14 @@ proxy: {
             console.log(data);
         })
     ```
+### mobx爬坑
+  * pro：mobx可能导致componentWillReceiveProps无法触发
+  * sol：autorun替代
+  ```
+  constructor(props) {
+    super(props);
+  }
+
+  //props变化自动执行，此时类似componentWillReceiveProps
+  disposer = autorun(() => console.log(this.props))
+  ```

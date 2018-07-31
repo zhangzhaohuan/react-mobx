@@ -82,7 +82,7 @@ module.exports = function(proxy, allowedHost) {
     public: allowedHost,
     proxy: {
       '/mock': {
-        target: 'http://localhost:3001/test',
+        target: 'http://localhost:3002/',
         changeOrigin: true,
         pathRewrite:{
           "^/mock" : ""
