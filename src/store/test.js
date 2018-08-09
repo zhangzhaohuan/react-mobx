@@ -70,7 +70,7 @@ class Test {
   //   }
   // }
   @action.bound addAge() {
-    this.age = this.age + 1;
+    this.age += 1;
   }
   // @action.bound addTodo (event) {
   //   if (event.keyCode === 13) {

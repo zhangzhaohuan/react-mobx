@@ -4,7 +4,7 @@ import { Button, DatePicker } from 'antd';
 import './App.css';
 import Test from './components/mobx/test'
 import { observer, inject } from 'mobx-react'
-import { observable, computed, autorun, action, configure, runInAction } from 'mobx'
+import {  autorun } from 'mobx'
 
 @inject('test')
 @observer
@@ -13,17 +13,17 @@ class App extends Component {
     super(props);
   }
 
+
   //props变化自动执行，此时类似componentWillReceiveProps
-  disposer = autorun(() => console.log(this.props))
+  // disposer = autorun(() => console.log(this.props))
 
   onChange = (e) => {
-    console.log(e._d.getTime());
+    // console.log(e._d.getTime());
   }
 
   add = () => {
-    console.log('ad');
     const { data } = this.props.test;
-    console.log(data);
+    // console.log(data);
   }
   render() {
     return (

@@ -1,43 +1,5 @@
 * created by zhangzhaohuan in 2018/05/31
-### less、sass支持
-  * 安装 less、less-load、sass-loader
-  ```
-  npm i less less-loader sass-loader -D
-  ```
-  * webpack.config.dev module（212行）行添加如下配置
-```
-{
-	test: /\.scss$/,
-	loaders: ['style-loader', 'css-loader', 'sass-loader'],
-},
-{
-	test: /\.less$/,
-	loaders: ['style-loader', 'css-loader', 'less-loader'],
-}
-```
-### antd 按需自动引入样式
-  * 安装babel-plugin-import
-  ```
-  yarn add babel-plugin-import --dev   
-  或者
-  npm i babel-plugin-import --save-dev
-  ```
-  * 打开webpack.config.dev module添加 第149行
-```
-plugins: [
-	["import", [{
-			"libraryName": "antd",
-			"libraryDirectory": "es",
-			"style": "css"
-		},
-		{
-			"libraryName": "antd",
-			"libraryDirectory": "es",
-			"style": true
-		}
-	]] // `style: true` 会加载 less 文件
-],
-```
+
 ### create-react-app 配置mobx支持
   * 安装 babel-plugin-transform-decorators-legacy
 ```
@@ -61,30 +23,6 @@ npm i babel-plugin-transform-decorators-legacy --save-dev
     "javascript.implicitProjectConfig.experimentalDecorators": true
 }
 ```
-### alias配置common文件的路径
-  * 打开webpack.config.dev.js 在alias添加（86行）
-  ```
-   common: path.resolve(__dirname, '../src/common/'),
-  ```
-### 配置反向代理
-  * 打开webpackDevServer.config proxy（89行）:注 mock数据是用的json-server
-```
-proxy: {
-      '/mock': {
-        target: 'http://localhost:3001/test',
-        changeOrigin: true,
-        pathRewrite:{
-          "^/mock" : ""
-        }
-      }
-    },
-```
-### 启动json-server
-  * npm install json-server -g
-  * 切换到mock数据的位置mock文件夹，执行
-  ```
-  json-server --watch db.json -p 3001
-  ```
 ### mobx api
   * observable, computed, autorun, action, configure, runInAction
   * 触发顺序：
@@ -139,7 +77,7 @@ proxy: {
     ```
 ### mobx爬坑
   * pro：mobx可能导致componentWillReceiveProps无法触发
-  * sol：autorun替代
+  * sol1：autorun替代
   ```
   constructor(props) {
     super(props);
@@ -148,3 +86,89 @@ proxy: {
   //props变化自动执行，此时类似componentWillReceiveProps
   disposer = autorun(() => console.log(this.props))
   ```
+  * sol2： componentWillReact
+  ```
+  /**
+   * 在组件添加@observer后，会多一个生命周期componentWillReact。
+   * 当组件内被observable观测的数据改变后，就会触发这个生命周期。
+   */
+  componentWillReact() {
+    console.log('in');
+  }
+
+  render() {
+    return (
+      <div>
+        <p>{this.test.getDataLength}</p>
+        <p>{this.test.age}</p>
+        <p>{this.test.getAge.toString()}</p>
+        {/* <p>{this.test.getlength.get()}</p> */}
+      </div>
+    )
+  }
+  ```
+
+## 项目基础配置
+### alias配置common文件的路径
+  * 打开webpack.config.dev.js 在alias添加（86行）
+  ```
+   common: path.resolve(__dirname, '../src/common/'),
+  ```
+### 配置反向代理
+  * 打开webpackDevServer.config proxy（89行）:注 mock数据是用的json-server
+```
+proxy: {
+      '/mock': {
+        target: 'http://localhost:3001/test',
+        changeOrigin: true,
+        pathRewrite:{
+          "^/mock" : ""
+        }
+      }
+    },
+```
+### 启动json-server
+  * npm install json-server -g
+  * 切换到mock数据的位置mock文件夹，执行
+  ```
+  json-server --watch src/mock/index.js -p 3001
+  ```
+### less、sass支持
+  * 安装 less、less-loader、sass-loader
+  ```
+  npm i less less-loader sass-loader -D
+  ```
+  * webpack.config.dev module（212行）行添加如下配置
+```
+{
+	test: /\.scss$/,
+	loaders: ['style-loader', 'css-loader', 'sass-loader'],
+},
+{
+	test: /\.less$/,
+	loaders: ['style-loader', 'css-loader', 'less-loader'],
+}
+```
+### antd 按需自动引入样式
+  * 安装babel-plugin-import
+  ```
+  yarn add babel-plugin-import --dev   
+  或者
+  npm i babel-plugin-import --save-dev
+  ```
+  * 打开webpack.config.dev module添加 第149行
+```
+plugins: [
+	["import", [{
+			"libraryName": "antd",
+			"libraryDirectory": "es",
+			"style": "css"
+		},
+		{
+			"libraryName": "antd",
+			"libraryDirectory": "es",
+			"style": true
+		}
+	]] // `style: true` 会加载 less 文件
+],
+```
