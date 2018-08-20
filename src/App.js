@@ -15,7 +15,7 @@ class App extends Component {
 
 
   //props变化自动执行，此时类似componentWillReceiveProps
-  // disposer = autorun(() => console.log(this.props))
+  disposer = autorun(() => console.log(this.props.test.age))
 
   onChange = (e) => {
     // console.log(e._d.getTime());
@@ -25,12 +25,14 @@ class App extends Component {
     const { data } = this.props.test;
     // console.log(data);
   }
+  
   render() {
     return (
       <div className="App">
         <Button type="primary" onClick={this.props.test.addAge}>Primary</Button>
         <DatePicker onChange={this.onChange} />
         <Test />
+        <p>{this.props.test.age}</p>
       </div>
     );
   }

@@ -84,13 +84,13 @@ npm i babel-plugin-transform-decorators-legacy --save-dev
   }
 
   //props变化自动执行，此时类似componentWillReceiveProps
-  disposer = autorun(() => console.log(this.props))
+  disposer = autorun(() => console.log(this.props.test.age))//依赖的数据发生变化才会触发
   ```
   * sol2： componentWillReact
   ```
   /**
    * 在组件添加@observer后，会多一个生命周期componentWillReact。
-   * 当组件内被observable观测的数据改变后，就会触发这个生命周期。
+   * 触发条件:(接收新的属性||setState)&&数据发生变化
    */
   componentWillReact() {
     console.log('in');
