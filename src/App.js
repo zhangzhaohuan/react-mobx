@@ -14,7 +14,7 @@ class App extends Component {
   }
 
 
-  //props变化自动执行，此时类似componentWillReceiveProps
+  //类似componentWillReceiveProps:但是必须依赖的数据发生变化时才促发
   disposer = autorun(() => console.log(this.props.test.age))
 
   onChange = (e) => {
