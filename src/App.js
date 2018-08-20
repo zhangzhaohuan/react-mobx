@@ -33,6 +33,7 @@ class App extends Component {
         <DatePicker onChange={this.onChange} />
         <Test />
         <p>{this.props.test.age}</p>
+        <a href='./login.html'>to login</a>
       </div>
     );
   }
