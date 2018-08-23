@@ -78,12 +78,12 @@ npm i babel-plugin-transform-decorators-legacy --save-dev
 ### mobx爬坑
   * pro：mobx可能导致componentWillReceiveProps无法触发
   * sol1：autorun替代
-  ```
+  ```@
   constructor(props) {
     super(props);
   }
 
-  //props变化自动执行，此时类似componentWillReceiveProps
+  //props（依赖的数据发生变化才会触发）变化自动执行，此时类似componentWillReceiveProps
   disposer = autorun(() => console.log(this.props.test.age))//依赖的数据发生变化才会触发
   ```
   * sol2： componentWillReact
@@ -91,6 +91,7 @@ npm i babel-plugin-transform-decorators-legacy --save-dev
   /**
    * 在组件添加@observer后，会多一个生命周期componentWillReact。
    * 触发条件:(接收新的属性||setState)&&数据发生变化
+
    */
   componentWillReact() {
     console.log('in');
@@ -99,10 +100,9 @@ npm i babel-plugin-transform-decorators-legacy --save-dev
   render() {
     return (
       <div>
-        <p>{this.test.getDataLength}</p>
-        <p>{this.test.age}</p>
-        <p>{this.test.getAge.toString()}</p>
-        {/* <p>{this.test.getlength.get()}</p> */}
+        <p>{this.props.test.getDataLength}</p>
+        <p>{this.props.test.age}</p>
+        <p>{this.props.test.getAge.toString()}</p>
       </div>
     )
   }
